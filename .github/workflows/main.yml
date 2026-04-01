@@ -2,28 +2,28 @@ name: Daily Animal Crawler
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天午夜執行
-  workflow_dispatch:      # 允許手動執行
+    - [cite_start]cron: '0 0 * * *'  # 每天觸發一次 [cite: 5, 145, 148]
+  [cite_start]workflow_dispatch:      # 允許手動觸發 [cite: 5, 152]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    [cite_start]runs-on: ubuntu-latest [cite: 158, 161]
     permissions:
-      contents: write    # 必須要有寫入權限才能存檔
+      contents: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        [cite_start]uses: actions/checkout@v3 [cite: 168, 169]
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        [cite_start]uses: actions/setup-python@v4 [cite: 174, 177]
         with:
-          python-version: '3.10'
+          [cite_start]python-version: '3.10' [cite: 179]
 
       - name: Install dependencies
-        run: pip install requests
+        [cite_start]run: pip install requests [cite: 188, 190]
 
       - name: Run script
-        run: python api.py
+        [cite_start]run: python api.py [cite: 193, 199]
 
       - name: Commit and Push
         run: |
