@@ -1,0 +1,34 @@
+name: Daily Animal Crawler
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天午夜執行
+  workflow_dispatch:      # 允許手動執行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # 必須要有寫入權限才能存檔
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run script
+        run: python api.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add animal_data.json
+          git commit -m "Update animal data" || exit 0
+          git push
